@@ -4,12 +4,14 @@ from django.utils import timezone
 
 def sanitizer_glb(request):
     sanitizer_obj = None 
+    Chatapi="REDACTED_OPENAI_KEY"
     
     if request.user.is_authenticated:
         sanitizer_obj, created = Sanitizer.objects.get_or_create(user=request.user)
     
     return {
         'sanitizer_obj': sanitizer_obj,
+        'Chatapi':Chatapi,
     }
 
 def dataCalculation(request):
