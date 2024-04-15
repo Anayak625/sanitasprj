@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'REDACTED_CREDENTIAL'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://sanitas.azurewebsites.net/','*']
 
 EMAIL_HOST = 'smtp-relay.brevo.com'
 EMAIL_HOST_USER = '173613662+Anayak625@users.noreply.github.com'
