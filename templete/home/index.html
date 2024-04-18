@@ -81,7 +81,7 @@
 {% endblock content %}
 
 {% block content1 %}
-<div class="col-md-12 threads">
+<div class="col-md-12 threads" style="display: block;">
     <br>
     <span class="blogs_head">Sanitas Sphere</span><hr><br>
     <div class="row sphere_area">
@@ -168,7 +168,25 @@
                                 
                                 <div class="post_footer">
                                     <span class="material-symbols-outlined"> comment </span>
-                                    <span class="material-symbols-outlined"> favorite </span>
+                                    <form class="like-form" action="{% url 'home:like_event' event_id=sphere.id %}" method="post">
+                                        {% csrf_token %}
+                                            <button type="submit" class="like-event-btn" data-event-id="{{ sphere.id }}">
+                                                {% if sphere in liked_events %}
+                                                    <span><i class="fas fa-heart"></i> {{ sphere.likes.count }}</span>
+                                                {% else %}
+                                                    <span><i class="far fa-heart" style="color:#12372a;"></i> {{ sphere.likes.count }}</span>
+                                                {% endif %}
+                                            </button>
+                                    </form>
+                                    <style>
+                                        .like-event-btn{
+                                            background-color: transparent;
+                                            border: none;
+                                        }
+                                        .like-event-btn i{
+                                            font-size: .9em;
+                                        }
+                                    </style>
                                     <span class="material-symbols-outlined"> refresh </span>
                                     <span class="material-symbols-outlined"> more_vert </span>
                                 </div>

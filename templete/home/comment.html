@@ -1,0 +1,153 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content1 %}
+
+<div class="col-md-12 threads" style="display: block;">
+    <div class="row sphere_area">
+        <div class="col-md-8">
+            <div style="background-color: #f5f6fa;padding-top: 1vw;position: sticky;top: 0vw;box-shadow: 0 0 1vw 1vw #f5f6fa;">
+                <div id="nav-footer-heading" style="background-color: #12372a;border-radius: .7em;">
+                    {% if not sanitizer_obj.is_verified %}
+                        <div id="nav-footer-avatar"><img src="{{user_profile.profile_image.url}}" /></div>
+                    {% else %}
+                        <div id="nav-footer-avatar"><img src="{{sanitizer_obj.profile_image.url}}" /></div>
+                    {% endif %}
+
+                    {% if not sanitizer_obj.is_verified %}
+                        <div id="nav-footer-titlebox">{{ user_profile.name }} {{ user_profile.surname }}</div>
+                    {% else %}
+                        <div id="nav-footer-titlebox">{{ sanitizer_obj.name }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="head_sphere">
+                <div class="sphere_post">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="ck ck-content">
+                                    {{sphereform.media}}
+                                    {{sphereform.content|safe}}
+                                </div>
+                                <hr style="padding: .3em;">
+                            </div>
+                            <div class="sphere_post_buttons">
+                                <div class="sphere_it_button">
+                                    <button type="submit" class="sphereit">Sphere It</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <style>
+                        .sphere_post textarea{
+                            width: 100%;
+                        }
+                        #id_content{
+                            font-size: 1em;
+                            border: none;
+                            outline: none;
+                            border-radius: .2em;
+                            width: 100%;
+                            padding: .3em;
+                            background-color: transparent;
+                            padding-left: .5em;
+                            color: #12372a;
+                        }
+                        #id_content:focus{
+                            border-color: none;
+                        }
+                    </style>
+                </div>
+            </div>
+            <div class="content_sphere">
+                {% for sphere in topsphere %}
+                    <div class="post">
+                        <div class="post_profile-image">
+                            {% if not sphere.author.sanitizer.is_verified %}
+                                <div id="sphere_author_profile"><img src="{{sphere.author.userprofile.profile_image.url}}" /></div>
+                            {% else %}
+                                <div id="sphere_author_profile"><img src="{{sphere.author.sanitizer.profile_image.url}}" /></div>
+                            {% endif %}
+                        </div>
+            
+                        <div class="post_body">
+                            <div class="post_header">
+                                <div class="post_header-text">
+                                    {% if not sphere.author.sanitizer.is_verified %}
+                                        <div class="header-icon-section">{{ sphere.author.userprofile.name }} {{ sphere.author.userprofile.surname }}</div>
+                                    {% else %}
+                                        <div class="header-icon-section">{{ sphere.author.sanitizer.name }}</div>
+                                    {% endif %}
+                                </div>
+            
+                                <div class="post_header-discription">
+                                    <p>{{ sphere.content|safe }}</p>
+                                </div>
+                                
+                                <div class="post_footer">
+                                    <span class="material-symbols-outlined"> comment </span>
+                                    <form class="like-form" action="{% url 'home:like_event' event_id=sphere.id %}" method="post">
+                                        {% csrf_token %}
+                                            <button type="submit" class="like-event-btn" data-event-id="{{ sphere.id }}">
+                                                {% if sphere in liked_events %}
+                                                    <span><i class="fas fa-heart"></i> {{ sphere.likes.count }}</span>
+                                                {% else %}
+                                                    <span><i class="far fa-heart" style="color:#12372a;"></i> {{ sphere.likes.count }}</span>
+                                                {% endif %}
+                                            </button>
+                                    </form>
+                                    <style>
+                                        .like-event-btn{
+                                            background-color: transparent;
+                                            border: none;
+                                        }
+                                        .like-event-btn i{
+                                            font-size: .7em;
+                                        }
+                                    </style>
+                                    <span class="material-symbols-outlined"> refresh </span>
+                                    <span class="material-symbols-outlined"> more_vert </span>
+                                </div>
+                            </div>
+            
+                        </div>
+            
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="head_void_area">
+                <div class="partnership">
+                    <span>Partnership</span>
+                </div>
+                {% for partner in partner %}
+                    <div class="advertisement">
+                        <img class="img-fluid" src="{{partner.image.url}}" alt="">
+                    </div>
+                {% endfor %}
+                <div class="partnership">
+                    <span>Sponsors</span>
+                </div>
+                <div class="sponsors">
+                    {% for sponsor in sponsor %}
+                        <img class="img-fluid" src="{{sponsor.image.url}}" alt="">
+                    {% endfor %} 
+                </div>
+                <div class="partnership">
+                    <span>Advertisement</span>
+                </div>
+                {% for advertise in advertisement %}
+                    <div class="advertisement" style="margin-top: 1vw;">
+                        <img class="img-fluid" src="{{advertise.image.url}}" alt="">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content1 %}
