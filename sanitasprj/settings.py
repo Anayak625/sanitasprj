@@ -27,7 +27,7 @@ SECRET_KEY = 'REDACTED_CREDENTIAL'
 DEBUG = True
 
 ALLOWED_HOSTS = ['https://sanitas.azurewebsites.net/','*']
-CSRF_TRUSTED_ORIGINS = ['https://sanitas.azurewebsites.net','https://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://sanitas.azurewebsites.net','https://127.0.0.1','https://github.com/Anayak625']
 
 EMAIL_HOST = 'smtp-relay.brevo.com'
 EMAIL_HOST_USER = '173613662+Anayak625@users.noreply.github.com'
